@@ -21,15 +21,20 @@ public class CreateCourseAndReviewsDemo {
 			// start a transaction
 			session.beginTransaction();
 
-			// get the course
-			int theId = 10;
-			Course tempCourse = session.get(Course.class, theId);
+			// create a course
+			Course tempCourse = new Course("Pacman - How To Score One Million Points");
 
-			// print the course
+			// add some reviews
+			tempCourse.addReview(new Review("Great course ... loved it!"));
+			tempCourse.addReview(new Review("Cool course, job well done"));
+			tempCourse.addReview(new Review("What a dumb course, you are an idiot!"));
+
+			// save the course ... and leverage the cascade all :-)
+			System.out.println("Saving the course");
 			System.out.println(tempCourse);
-
-			// print the course reviews
 			System.out.println(tempCourse.getReviews());
+
+			session.save(tempCourse);
 
 			// commit transaction
 			session.getTransaction().commit();
